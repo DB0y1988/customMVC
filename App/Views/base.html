@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="{% block description %}{% endblock %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}{% endblock %}</title>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="/assets/js/home-scripts.js" type="text/javascript"></script>
+
+    <link rel="stylesheet" type="text/css" href="http://custom-mvc.webbrowebdesigns.co.uk/assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="http://custom-mvc.webbrowebdesigns.co.uk/assets/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
+
+</head>
+<body>
+<header class="header">
+    <div class="container bg-white pt-3 pr-5 pl-5">
+      <div class="row">
+        <div class="col-sm-4">
+          <ul class="d-flex flex-row p-0">
+            <li class="p-1 list-inline "><a href="{{ instagram_link }}" title="Follow us on Instagram"><img src="/assets/images/instagram-icon.png" alt="Instagram logo"/></a></li>
+            <li class="p-1 list-inline "><a href="{{ facebook_link }}" title="Follow us on Facebook"><img src="/assets/images/facebook-icon.png" alt="Facebook logo"/></a></li>
+          </ul>
+        </div>
+        <div class="col-sm-5 offset-sm-3 page-navigation">
+          <nav>
+            <ul class="nav">
+                {% for menu in page_menu %}
+                {% if menu.child_pages is not empty %}
+                <li class="nav-item has-child">
+                  {% else %}
+                    <li class="nav-item">
+                  {% endif %}
+                  <a href="/pages/{{ menu.page_slug }}" class="nav-link">{{ menu.title }}</a>
+                  {% if menu.child_pages is not empty %}
+                  <ul class="sub-menu">
+                    {% for child_pages in menu.child_pages %}
+                      <li><a href="/pages/{{ child_pages.page_slug }}" class="nav-link">{{ child_pages.title }}</a></li>
+                    {% endfor %}
+                  </ul>
+                  {% endif %}
+                </li>
+                {% endfor %}
+              {% if current_user %}
+                <li class="nav-item"><a href="/Login/destroy" class="nav-link">Logout</a></li>
+                <li class="nav-item"><a href="/Admin/index" class="nav-link">Admin</a></li>
+              {% else %}
+              </ul>
+            </nav>
+          {% endif %}
+        </div>
+      </div>
+        <div class="row">
+          <div class="col-sm-6 offset-md-3 logo-wrap text-center">
+            <h1 class="logo pb-3">Hanger Pangs</h1>
+          </div>
+          <div class="col-sm-9">
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 p-0 recipe-navigation">
+            <nav class="mt-2 mb-4 mb-0">
+                <ul class="nav">
+                    <li class="nav-item {% if uri == "/" %} active{% endif %}"><a href="/" class="nav-link">Home</a></li>
+                    {% for menu in recipe_menu %}
+                    {% if menu.child_pages is not empty %}
+                    <li class="nav-item has-child">
+                      {% else %}
+                        <li class="nav-item">
+                      {% endif %}
+                      <a href="/blog/{{ menu.category_slug }}/category" class="nav-link">{{ menu.category_name }}</a>
+                      {% if menu.child_pages is not empty %}
+                      <ul class="sub-menu">
+                        {% for child_pages in menu.child_pages %}
+                          <li><a href="/blog/{{ child_pages.category_slug }}/category" class="nav-link">{{ child_pages.category_name }}</a></li>
+                        {% endfor %}
+                      </ul>
+                      {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+</header>
+
+  <section class="main">
+  <div class="container bg-white pr-5 pl-5">
+    <div class="row">
+      {% for message in flash_messages %}
+          <div class="alert alert-{{ message.type }}">
+              {{ message.body }}
+          </div>
+      {% endfor %}
+{% block body %}
+<!-- BODY INSERTS HERE -->
+{% endblock %}
+
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+<script src="/assets/js/bootstrap.min.js" type="text/javascript"></script>
+
+</div>
+</div>
+</section>
+
+
+<footer>
+    <div class="container bg-white pr-5 pl-5">
+        <div class="row">
+            <div class="col-lg-12 mt-4">
+              <ul class="social-links">
+                <li class="pb-4"><a href="{{ instagram_link }}" title="Follow us on Instagram"><img src="/assets/images/instagram-icon.png" alt="Instagram logo"/></a></li>
+                <li class="pb-4"><a href="{{ facebook_link }}" title="Follow us on Facebook"><img src="/assets/images/facebook-icon.png" alt="Facebook logo"/></a></li>
+              </ul>
+              <div class="clearfix">
+                <p class="w-100 mb-1 text-center">@Copyright Hanger Pangs 2018</p>
+                <p class="w-100 text-center">Web design & development by <strong>Webbro Web Designs</strong></p>
+              </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,60 @@
+{% extends "admin-base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+<div class="col-12">
+  <div class="row">
+
+<h1 class="clearfix w-100 pb-4">Admin - New Support Ticket</h1>
+
+<form action="support/create-ticket" method="POST" class="w-100" enctype="multipart/form-data">
+  <div class="form-group">
+  <label for="ticket-title">Ticket Title</label>
+  <input type="text" name="ticket-title" class="form-control" required>
+  </div>
+  <div class="row">
+  <div class="col-lg-6">
+  <div class="form-group">
+    <label for="ticket-type">Ticket Type</label>
+    <select name="ticket-type" class="form-control" required>
+      <option value="select" disabled selected></option>
+      <option value="Bug">Bug</option>
+      <option value="Feature Request">Feature Request</option>
+      <option value="Change Request">Change Request</option>
+      <option value="How To">How To</option>
+    </select>
+  </div>
+</div>
+<div class="col-lg-6">
+  <div class="form-group">
+    <label for="ticket-type">Importance</label>
+    <select name="ticket-importance" class="form-control" required>
+      <option value="select" disabled selected></option>
+      <option value="Business Critical">Business critical</option>
+      <option value="Important">Important</option>
+      <option value="General Issue">General issue</option>
+      <option value="Minor">Minor</option>
+    </select>
+  </div>
+</div>
+</div>
+<div class="row">
+  <div class="col-lg-12 pb-3 pt-1">
+    <label for="ticket-screenshot" class="w-100">Screenshot <small>( If required )</small></label>
+    <input type="file" name="ticket-screenshot[]">
+  </div>
+</div>
+  <div class="form-group">
+    <label for="ticket-message">Message</label>
+    <textarea name="ticket-message" class="form-control" required></textarea>
+  </div>
+  <input type="submit" name="submit" value="Create ticket" class="btn btn-primary">
+</form>
+
+</div>
+
+</div>
+
+{% endblock %}

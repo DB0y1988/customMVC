@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block description %}{{ excerpt }}{% endblock %}
+
+{% block body %}
+
+<section class="main single w-100">
+  <div class="container">
+    <div class="row">
+      <article class="w-100">
+        <h1><strong>Recipe:</strong> {{ title }}</h1>
+        <div class="featured-image py-3">
+          {% if featured_image is not empty %}
+          <img src="{{featured_image}}" alt="{{ title }}"/>
+          {% endif %}
+        </div>
+        <div class="page-content w-100">
+          {{ introduction }}
+        </div>
+        <div class="steps pt-3">
+          {% if steps is not empty %}
+          <h2 class="pb-3">Recipe Directions</h2>
+          {% endif %}
+          <ol>
+          {% for step in steps %}
+            <li>{{ step }}</li>
+          {% endfor %}
+        </ol>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

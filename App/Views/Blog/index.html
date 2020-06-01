@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Posts{% endblock %}
+
+{% block body %}
+
+<section class="content blog">
+    <div class="container">
+        <div class="row">
+            <h1 class="clearfix w-100 pb-3">Recipes - {{ category }}</h1>
+                {% for post in posts %}
+                <div class="col-lg-4 pl-0 pr-4 pb-2">
+                  <article>
+                    <div class="image-wrap">
+                      <a href="/blog/{{post.id}}/single/{{ post.page_slug }}">
+                        <img src="{{ post.featured_image }}" alt="{{ post.title }}">
+                      </a>
+                    </div>
+                    <h3 class="pb-2 pt-3"><a href="/blog/{{post.id}}/single/{{ post.page_slug }}">{{ post.title }}</a></h3>
+                    <p>{{ post.excerpt }}</p>
+                  </article>
+                </div>
+                {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

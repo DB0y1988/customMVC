@@ -1,0 +1,66 @@
+{% extends "admin-base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+<div class="col-12">
+
+<h1>Admin  - Theme Options</h1>
+
+<form action="/theme/update-social-options" method="POST">
+  <div class="row">
+    <div class="col-sm-12">
+      <h2 class="pt-3 pb-2">Social options</h2>
+      <div class="form-group">
+        <label for="facebook-link">Facebook Link</label>
+        <input type="text" name="facebook-link" class="form-control" value="{{ facebook }}">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="form-group">
+        <label for="instagram-link">Instagram Link</label>
+        <input type="text" name="instagram-link" class="form-control"  value="{{ instagram }}">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <input type="submit" value="Submit" class="btn btn-primary">
+    </div>
+  </div>
+</form>
+  <hr />
+  <form action="/theme/update-widget-options" method="POST">
+    <input type="hidden" name="widget-name" value="widget_one">
+  <div class="row">
+    <div class="col-sm-12">
+      <h3>Widgets</h3>
+      <div class="form-group">
+        <label for="widget-one" class="w-100">Homepage - Widget 1 <small>(This widget will display an introduction to the page on the homepage)</small></label>
+        <select name="widget-title" class="w-50 form-control">
+          <option value="{{ widget_one }}">{{ widget_one }}</option>
+          {% for widget in pages %}
+          {% if widget.title != widget_one %}
+            <option value="{{ widget.title }}">{{ widget.title }}</option>
+            {% endif %}
+          {% endfor %}
+          {% if widget_one != "Not set" %}
+          <option value="Not set">Not set</option>
+          {% endif %}
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <input type="submit" value="Submit" class="btn btn-primary">
+    </div>
+  </div>
+</form>
+
+</div>
+
+{% endblock %}

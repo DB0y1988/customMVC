@@ -1,0 +1,85 @@
+{% extends "admin-base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+<div class="col-12">
+
+<h1 class="clearfix w-100 pb-4">Admin - Support</h1>
+
+{% if tickets is not empty %}
+
+<div class="col-lg-6 p-0">
+
+<h3 class="w-100">Ticket Title</h4>
+<p>{{ tickets.ticket_title }}</p>
+
+<h3 class="w-100">Ticket Type</h4>
+<p>{{ tickets.ticket_type }}</p>
+
+<h3 class="w-100">Ticket Importance</h4>
+<p>{{ tickets.ticket_importance }}</p>
+
+<h3 class="w-100">Ticket Status</h4>
+<p>{{ tickets.ticket_status }}</p>
+
+<h3 class="w-100">Ticket Message</h4>
+<p>{{ tickets.ticket_message }}</p>
+
+
+</div>
+
+<div class="col-lg-6">
+
+{% if tickets.ticket_screenshot is not empty %}
+
+  <h3 class="w-100">Ticket Screenshot</h4>
+
+  <img src="/assets/uploads/screenshots/{{ tickets.ticket_screenshot }}" class="pt-1 img-thumbnail mb-5" />
+
+{% endif %}
+
+{% endif %}
+
+</div>
+
+<div class="col-lg-12 pl-0">
+  <form action="/support/{{ tickets.id }}/update-ticket" method="POST">
+  <table border="0">
+    <tr>
+      <td colspan="4" class="pl-0">
+        {% if tickets.ticket_status == 'Closed' %}
+        <input type="checkbox" name="confirm" value="confirm" id="checkbox-confirm" checked><label class="pl-2">Close ticket</label>
+        {% else %}
+          <input type="checkbox" name="confirm" value="confirm" id="checkbox-confirm"><label class="pl-2">Close ticket</label>
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" class="pl-0">
+        <a href="/support/index?page=1" class="btn btn-primary">Back</a>
+        <input type="hidden" name="id" value="{{ tickets.id }}">
+      </td>
+      <td valign="top">
+        <input type="submit" class="btn btn-danger close-btn" value="Close ticket" disabled>
+      </td>
+      {% if tickets.ticket_status == 'Closed' %}
+      <td valign="top">
+        <input type="submit" class="btn btn-success open-btn" value="Open ticket">
+        <input type="hidden" name="change-status" value="Open">
+      </td>
+      {% else %}
+        <input type="hidden" name="change-status" value="Closed">
+      {% endif %}
+      <td valign="top">
+        <a href="/support/{{ tickets.id }}/delete-ticket" class="btn btn-danger">Delete ticket</a>
+      </td>
+      </tr>
+    </table>
+  </form>
+</div>
+
+</div>
+
+{% endblock %}

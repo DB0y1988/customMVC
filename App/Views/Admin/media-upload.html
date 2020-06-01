@@ -1,0 +1,24 @@
+{% extends "admin-base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+<div class="col-12">
+  <div class="row">
+
+<h1 class="clearfix w-100">Upload Media</h1>
+
+<form action="/admin/upload-media-image" method="POST" enctype="multipart/form-data">
+  <label for="fileToUpload" class="w-100 pt-3">To select multiple files, hold down the CTRL or SHIFT key while selecting.</label>
+  <input type="file" name="media-image[]" multiple>
+  <div class="row ml-1 mt-3">
+  <input type="submit" name="submit" value="Upload image" class="btn btn-primary">
+</div>
+</form>
+
+</div>
+
+</div>
+
+{% endblock %}

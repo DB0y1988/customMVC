@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+<div class="col-lg-12 pt-3 pb-3 pl-0 pr-0">
+  <div id="carouselExampleControls" class="carousel slide carousel-fade" data-ride="carousel">
+    <div class="carousel-inner">
+      {% set counter = '0' %}
+      {% for slides in slider %}
+      {% if counter == '0' %}
+      <div class="carousel-item active">
+        {% else %}
+        <div class="carousel-item">
+          {% endif %}
+          <img class="d-block w-100" src="{{ slides.slider_image }}" alt="{{ slides.slider_title }}">
+          <div class="carousel-caption d-none d-md-block">
+            <h2>{{ slides.slider_title }}</h2>
+            <p class="text-white">{{ slides.slider_content }}</p>
+          </div>
+        </div>
+        {% set counter = counter + 1 %} {% endfor %}
+      </div>
+
+      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+      <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+
+    </div>
+  </div>
+
+  <h2 class="clearfix text-center w-100 py-3">Featured Posts / Pages</h2>
+
+  <div class="row featured-posts">
+
+    {% for recipes in featuredRecipes %}
+
+    <div class="col-lg-4 ">
+      {% if recipes.featured_image is not empty %}
+      <div class="image-wrap">
+        <a href="/blog/{{ recipes.id }}/single/{{ recipes.page_slug }}">
+          <img src="{{ recipes.featured_image }}" alt="{{ recipes.title }}">
+        </a>
+      </div>
+      {% endif %}
+      <h3 class="pt-3 pb-1"><a href="/blog/{{ recipes.id }}/single/{{ recipes.page_slug }}">{{ recipes.title }}</a></h3>
+      <p class="text-justify">{{ recipes.excerpt }}</p>
+      <p><i class="post-categories">{{ recipes.category }}</i></p>
+    </div>
+
+    {% endfor %}
+
+    {% if widget_one.0.widget_title != "Not set" %}
+    {% for widget in widget_one %}
+
+    <div class="col-lg-4 widget_one">
+      <div class="widget-page-preview">
+        <h3 class="mb-3 text-center mt-0">{{ widget.widget_title }}</h3>
+        <img src="{{ widget.widget_image }}" alt="{{ widget.widget_title }}" class="float-left mr-3 mb-1">
+        <p class="text-justify">{{ widget.widget_content }}</p>
+        <div>
+          <h3 class="text-center pb-2 pt-2">Follow me</h3>
+          <ul class="text-center p-0">
+            <li class="list-unstyled list-inline-item"><a href="{{ instagram_link }}" title="Follow us on Instagram"><img src="/assets/images/instagram-icon.png" alt="Instagram logo"/></a></li>
+            <li class="list-unstyled list-inline-item"><a href="{{ facebook_link }}" title="Follow us on Facebook"><img   src="/assets/images/facebook-icon.png" alt="Facebook logo"/></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    {% endfor %}
+    {% endif %}
+
+  </div>
+
+  <div class="row w-100">
+    <div class="col-lg-8 home-recent-recipe-post">
+      <h2 class="clearfix w-100 pt-2 pb-1">Recent recipe post</h2>
+      {% for post in recent_posts %}
+      <a href="/blog/{{ post.id }}/single/{{ post.page_slug }}" title="View recipe"><img src="{{ post.featured_image }}" class="mt-3 mb-3" alt="{{ post.title }}" /></a>
+      <h3><a href="/blog/{{ post.id }}/single/{{ post.page_slug }}" title="View recipe">{{ post.title }}</a></h3>
+      <p class="text-justify">{{ post.introduction }}</p>
+      <p class="mb-2"><i class="post-categories">{{ post.category }}</i></p>
+      {% endfor %}
+    </div>
+    <div class="col-lg-4">
+      Advert here
+    </div>
+  </div>
+
+  {% endblock %}

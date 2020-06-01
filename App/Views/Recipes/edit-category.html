@@ -1,0 +1,59 @@
+{% extends "admin-base.html" %}
+
+{% block title %}Posts{% endblock %}
+
+{% block body %}
+
+  <h1 class="w-100">Admin - Edit Category - {{ category_name }}</h1>
+
+  <div class="row">
+
+  <div class="col-lg-6 pt-3">
+
+  <form action="/Recipes/update-category" method="post">
+    <div class="form-group">
+      <label for="category">Category Name:</label>
+      <input type="text" name="category_name" class="form-control" value="{{ category_name }}">
+    </div>
+    <div class="form-group">
+      <label for="category">Category Slug:</label>
+      <input type="text" name="category_slug" class="form-control" value="{{ category_slug }}">
+    </div>
+    <div class="form-group">
+      <input type="hidden" name="id" value="{{ category_id }}">
+      <label for="category-parent">Category Parent:</label>
+      <select class="form-control" name="category_parent">
+        {% if category_parent is not empty %}
+          <option value="{{ category_parent }}">{{ category_parent }}</option>
+        {% endif %}
+        {% if category_parent != "No parent" %}
+        <option value="No parent">No parent</option>
+        {% endif %}
+        {% for categories in all_categories %}
+        {% if categories.category_name != category_parent %}
+        {% if categories.category_name != category_name %}
+          <option value="{{ categories.category_name }}">{{ categories.category_name }}</option>
+        {% endif %} {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <h3 class="pt-2">Include in the category menu</h3>
+    {% if in_menu == "1" %}
+      <input type="checkbox" name="in_menu" value="1" checked> Yes
+    {% else %}
+    <input type="checkbox" name="in_menu" value="1"> Yes
+    {% endif %}
+    </div>
+    <input type="submit" name="submit" class="btn btn-primary" value="Update">
+  </form>
+
+</div>
+
+</div>
+
+{% endblock %}
+
+{% block footer %}
+<h1>Footer</h1>
+{% endblock %}

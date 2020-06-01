@@ -1,0 +1,64 @@
+{% extends "admin-base.html" %}
+
+{% block title %}Posts{% endblock %}
+
+{% block body %}
+
+  <h1 class="w-100">Admin - Homepage Slider</h1>
+
+  {% if slider is not empty %}
+
+  <table width="100%" class="homepage-slider-list">
+    <tr>
+      <th>Title</th>
+      <th>Image</th>
+      <th>&nbsp;</th>
+
+      <th>&nbsp;</th>
+    </tr>
+  {% for slides in slider %}
+    <tr>
+      <td><strong>{{ slides.slider_title }}</strong></td>
+      <td><img src="{{ slides.slider_image }}" alt="{{ slides.slider_title }}"></td>
+      <td><a href="/home/{{ slides.id }}/edit-slide" class="btn btn-primary">Edit</td>
+      <td><a href="/home/{{ slides.id }}/delete" class="btn btn-danger">Delete</a></td>
+    </tr>
+  {% endfor %}
+  </table>
+
+  {% else %}
+
+  <p>Sorry, no homepage slider slides to show, why not <a href="/home/new-homepage-slide">add some now</a>.</p>
+
+  {% endif %}
+
+  <div class="hp-pager">
+    <ul class="pl-0 mt-3">
+      {% if (current_page <= total_page_count) and (current_page > 1) %}
+      <a href="/home/homepage-slider?page={{ previous_link }}">Previous</a>
+      {% endif %}
+      {% if total_page_count > 1 %}
+    {% for pagintation in total_pages %}
+      {% if pagintation == current_page %}
+      <li class="list-unstyled list-inline-item pt-1 pb-1 pl-2 pr-2 current-page mr-0">
+        {% else %}
+        <li class="list-unstyled list-inline-item pt-1 pb-1 pl-2 pr-2">
+        {% endif %}
+      <a href="/home/homepage-slider?page={{ pagintation }}" >{{ pagintation }}</a>
+    </li>
+    {% endfor %}
+    {% endif %}
+    {% if (current_page >= 1) and (current_page < total_page_count) %}
+    {% set pagintation = current_page + 10 %}
+    <a href="/home/homepage-slider?page={{ pagintation }}">Next</a>
+    {% endif %}
+    </ul>
+  </div>
+
+  <a href="/home/new-homepage-slide" class="btn btn-primary my-3">Add new</a>
+
+{% endblock %}
+
+{% block footer %}
+<h1>Footer</h1>
+{% endblock %}

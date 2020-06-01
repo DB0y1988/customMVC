@@ -1,0 +1,62 @@
+{% extends "admin-base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+<div class="col-12">
+
+  <div class="row media-library">
+
+<h1 class="clearfix w-100 pb-4">Media Library</h1>
+
+{% for images in medialibrary %}
+
+<div class="col-lg-4">
+  <div class="copy-link">
+    <a href="#" id="{{ images }}" title="Copy image source"><i class="fas fa-copy"></a></i>
+  </div>
+  <img src="{{ images }}" class="img-fluid py-2">
+</div>
+
+{% endfor %}
+
+</div>
+
+<hr />
+
+<div class="hp-pager">
+  <ul class="pl-0">
+    {% if (current_page <= total_page_count) and (current_page > 1) %}
+    {% set pagintation = current_page - 1 %}
+    <a href="/admin/media-library?page={{ previous_link }}&amp;offset={{ previous_offset }}">Previous</a>
+    {% endif %}
+    {% if total_page_count > 1 %}
+  {% for pagintation in total_pages %}
+    {% if pagintation == current_page %}
+    <li class="list-unstyled list-inline-item pt-1 pb-1 pl-2 pr-2 current-page mr-0">
+      {% else %}
+      <li class="list-unstyled list-inline-item pt-1 pb-1 pl-2 pr-2">
+      {% endif %}
+    <a href="/admin/media-library?page={{ pagintation }}&amp;offset={{ offset }}" >{{ pagintation }}</a>
+  </li>
+  {% set offset = offset + 6 %}
+  {% endfor %}
+  {% endif %}
+  {% if (current_page >= 1) and (current_page < total_page_count) %}
+  {% set pagintation = current_page + 1 %}
+  <a href="/admin/media-library?page={{ pagintation }}&amp;offset={{ next_link }}">Next</a>
+  {% endif %}
+
+  </ul>
+</div>
+
+<div class="row clearfix w-100">
+  <div class="col-lg-12">
+    <a href="/admin/media-upload" class="btn btn-primary mt-3">Add new</a>
+  </div>
+</div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends "admin-base.html" %}
+
+{% block title %}Posts{% endblock %}
+
+{% block body %}
+
+  <h1 class="w-100">Admin - Add New Recipe</h1>
+
+  <form action="/recipes/update" method="post" class="page-form" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="title"><h3>Title:</h4></label>
+      <input name="title" id="title" class="form-control" type="text" placeholder="Give this post a title">
+    </div>
+    <input type="hidden" name="id" id="id" value="{{ id }}">
+    <textarea name="introduction" id="content" style="display:none;"></textarea>
+    <div class="form-group">
+      <label for="content"><h3>Introduction</h4></label>
+        {% include 'toolbar.html' only %}
+        <div class="content editor" contenteditable="true">
+
+        </div>
+        <textarea name="introduction" id="content-textarea" style="display:none"></textarea>
+    </div>
+    <div class="row px-3">
+      <h3 class="w-100">Recipe Categories</h4>
+      {% for category in categories %}
+      <div class="col-lg-2">
+        <input type="checkbox" name="categories[]" value="{{ category.category_name }}"> {{ category.category_name }}
+      </div>
+      {% endfor %}
+    </div>
+    <div class="row">
+      <div class="col-sm-12 py-3 featured-image-wrap">
+        <div class="row">
+          <div class="col-lg-4">
+            <h3>Featured Image</h4>
+            <button type="button" class="btn btn-primary my-2 text-white" data-toggle="modal" data-target="#exampleModal">Add new featured image</button>
+          </div>
+          <div class="col-lg-7 p-0">
+            <div class="hidden-media-fields"></div>
+            <div class="featured-image-holder"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <h3>Recipe Steps</h4>
+      <a href="#" class="btn btn-primary btn-increment-steps my-2">Add more steps</a>
+      <ol class="recipe-steps-list">
+        <li class="py-1">
+          <table width="100%" border="0">
+            <tr>
+              <td width="90%"><input type="text" name="steps[]" class="form-control" placeholder="Add a recipe step"></td>
+              <td width="10%"><a href="#" class="remove_field">Remove</a></td>
+            </tr>
+          </table>
+        </li>
+      </ol>
+    </div>
+
+    <hr />
+
+    <h3 class="pb-2">Is this post featured?</h3>
+
+    <input type="checkbox" name="is_featured" value="yes" class="mr-2">Yes
+
+    <hr />
+
+
+    <div class="form-group">
+    <label for="excerpt"><h3>The excerpt:</h4></label>
+    <p>Max length 150 characters</p>
+    <input name="excerpt" id="excerpt" class="form-control" type="text" placeholder="Give this post a description" maxlength="250">
+    </div>
+    <input type="submit" name="submit" value="Save" class="btn btn-primary submit-page">
+    <a href="/Admin/Recipes" class="btn btn-primary">Back</a>
+  </form>
+
+
+{% endblock %}
+
+{% block footer %}
+<h1>Footer</h1>
+{% endblock %}

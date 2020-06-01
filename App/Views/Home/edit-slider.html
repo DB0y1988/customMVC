@@ -1,0 +1,58 @@
+{% extends "admin-base.html" %}
+
+{% block title %}Posts{% endblock %}
+
+{% block body %}
+
+  <h1 class="w-100">Admin - Edit Slide</h1>
+
+  <form action="/home/update" method="POST" enctype="multipart/form-data">
+    {% if slide_image is not empty %}
+    <table border="0" class="featured-image-wrap">
+      <tr>
+        <td class="pl-0">
+        <div class="featured-image">
+          <h3>Slider Image</h3>
+          <div class="featured-image-holder">
+            <div id="remove-image">
+              <a href="#" title="Remove image">X</a>
+            </div>
+            <img src="{{ slide_image }}" alt="slider-image"/>
+          </div>
+        </div>
+      </td>
+        <td>
+          <h3>Upload a New Slide Image</h4>
+          <button type="button" class="btn btn-primary mt-2 mb-3 text-white clearfix" data-toggle="modal" data-target="#exampleModal">Add new featured image</button>
+          <div class="hidden-media-fields"></div>
+          <div class="featured-image-holder"></div>
+        </td>
+      </tr>
+    </table>
+    {% else %}
+    <h3>Upload a featured image</h4>
+    <button type="button" class="btn btn-primary my-2 text-white clearfix" data-toggle="modal" data-target="#exampleModal">Add new featured image</button>
+    <div class="hidden-media-fields"></div>
+    <div class="featured-image-holder"></div>
+    {% endif %}
+    <div class="form-group">
+      <small class="w-100 cleafix display-block pb-3"><strong>(Image dimensions: 1075px Width x 525px Height )</strong></small>
+      <label for="slider_title"><h3 class="w-100">Slider Title:</h4></label>
+      <input type="text" name="slider_title" id="slider-title" value="{{ slide_title }}" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="slider_content"><h3>Slider Content:</h4></label>
+      <textarea name="slider_content" class="form-control" rows="5">{{ slider_content }}</textarea>
+    </div>
+    <input type="hidden" name="id" value="{{ slider_id }}">
+    <div class="clearfix">
+      <input type="submit" name="submit" value="Save" class="btn btn-primary">
+      <a href="/home/homepage-slider" class="btn btn-primary">Back</a>
+    </div>
+  </form>
+
+{% endblock %}
+
+{% block footer %}
+<h1>Footer</h1>
+{% endblock %}

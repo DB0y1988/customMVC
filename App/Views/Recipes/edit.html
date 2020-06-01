@@ -1,0 +1,108 @@
+{% extends "admin-base.html" %}
+
+{% block title %}Posts{% endblock %}
+
+{% block body %}
+
+  <h1 class="w-100">Admin - Edit Recipe</h1>
+
+  <form action="/recipes/update" method="post" class="page-form" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="title"><h3>Title:</h3></label>
+      <input name="title" id="title" class="form-control" type="text" value="{{ title }}">
+    </div>
+    <input type="hidden" name="id" id="id" value="{{ id }}">
+    <textarea name="introduction" id="content" style="display:none;"></textarea>
+    <div class="form-group">
+      <label for="content"><h3>Introduction</h3></label>
+      {% include 'toolbar.html' only %}
+      <div class="editor" contenteditable="true">
+        {{ introduction }}
+      </div>
+    </div>
+    <div class="row px-3">
+      <h3 class="w-100">Recipe Categories</h3>
+      {% for categories in set_categories %}
+      <div class="col-lg-2">
+      <input type="checkbox" name="categories[]" value="{{ categories.category_name }}" checked> {{ categories.category_name }}
+      </div>
+      {% endfor %}
+      {% for categories in all_categories %}
+        <div class="col-lg-2">
+            <input type="checkbox" name="categories[]" value="{{ categories }}"> {{ categories }}
+          </div>
+      {% endfor %}
+    </div>
+    <hr />
+    {% if featured_image is not empty %}
+    <table border="0" class="featured-image-wrap">
+      <tr>
+        <td>
+        <div class="featured-image">
+          <h3>Featured Image</h3>
+          <div class="featured-image-holder">
+            <div id="remove-image">
+              <a href="#" title="Remove image">X</a>
+            </div>
+          <img src="{{featured_image}}" alt="featured-image"/>
+          </div>
+          <input type="hidden" name="featured_image" value="{{ featured_image }}">
+        </div>
+      </td>
+        <td>
+          <h3>Upload a new featured image</h3>
+          <button type="button" class="btn btn-primary my-2 text-white" data-toggle="modal" data-target="#exampleModal">Add new featured image</button>
+          <div class="hidden-media-fields"></div>
+          <div class="featured-image-holder"></div>
+        </td>
+      </tr>
+    </table>
+    {% else %}
+    <h3>Upload a featured image</h3>
+    <button type="button" class="btn btn-primary my-2 text-white" data-toggle="modal" data-target="#exampleModal">Add new featured image</button>
+    <div class="hidden-media-fields"></div>
+    <div class="featured-image-holder"></div>
+    {% endif %}
+    <hr />
+    {% if steps is not empty %}
+    <ol class="recipe-steps-list">
+    <h3>Recipe Steps</h3>
+    <a href="#" class="btn btn-primary btn-increment-steps my-3">Add more steps</a>
+      {% for showSteps in steps %}
+      <li class="py-1">
+      <table>
+        <tr>
+          <td width="90%"><input type="text" name="steps[]" class="form-control" value="{{ showSteps }}"></td>
+          <td width="10%"><a href="#" class="remove_field">Remove</a></td>
+        </tr>
+      </table>
+      </li>
+      {% endfor %}
+  </ol>
+    {% endif %}
+
+    <hr />
+
+    <h3 class="pb-2">Is this post featured?</h3>
+
+    {% if is_featured == 1 %}
+    <input type="checkbox" name="is_featured" value="Yes" class="mr-2" checked>Yes
+    {% else %}
+    <input type="checkbox" name="is_featured" value="Yes" class="mr-2">Yes
+    {% endif %}
+
+    <hr />
+
+    <div class="form-group">
+    <label for="excerpt"><h3>The excerpt:</h3></label>
+    <p>Max length 150 characters</p>
+    <input name="excerpt" id="excerpt" class="form-control" type="text" value="{{ excerpt }}" placeholder="Please give this article a description" maxlength="250">
+    </div>
+    <input type="submit" name="submit" value="Update" class="btn btn-primary">
+    <a href="/Admin/Recipe/list" class="btn btn-primary">Back</a>
+  </form>
+{% endblock %}
+
+{% block footer %}
+<h1>Footer</h1>
+{% endblock %}

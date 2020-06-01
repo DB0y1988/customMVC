@@ -1,0 +1,61 @@
+{% extends "admin-base.html" %}
+
+{% block title %}Posts{% endblock %}
+
+{% block body %}
+
+  <h1 class="w-100">Admin - Recipe Categories</h1>
+
+  <div class="row">
+
+  <div class="col-lg-6">
+
+    <h3 class="pt-2">Add New Category</h3>
+
+  <form action="/Recipes/addNewCategory" method="post">
+    <div class="form-group">
+      <label for="category">Category Name:</label>
+      <input type="text" name="category_name" class="form-control" placeholder="Type your category name">
+    </div>
+    <input type="submit" name="submit" class="btn btn-primary" value="Add category">
+  </form>
+
+</div>
+
+<div class="col-lg-6">
+
+  <h3 class="pt-2">Current Set Categories</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th class="font-weight-normal">Category Name</th>
+        <th class="font-weight-normal">Category Slug</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for category in categories %}
+      <tr>
+        <td>{{ category.category_name }}</td>
+        <td>{{ category.category_slug }}</td>
+        <td>
+          <form action="/Recipes/deleteRecipeCategory" method="POST">
+            <input type="submit" name="delete" class="btn btn-danger" value="Delete">
+            <input type="hidden" name="category-name" value="{{ category.category_name }}">
+            <input type="hidden" name="category-id" value="{{ category.id }}">
+          </form>
+        </td>
+        <td><a href="/recipes/{{ category.id }}/edit-category" class="btn btn-primary">Edit</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+<h1>Footer</h1>
+{% endblock %}

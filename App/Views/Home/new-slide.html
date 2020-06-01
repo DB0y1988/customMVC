@@ -1,0 +1,37 @@
+{% extends "admin-base.html" %}
+
+{% block title %}Posts{% endblock %}
+
+{% block body %}
+
+  <h1 class="w-100">Admin - Add a New Slide</h1>
+
+  <form action="/home/update" method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="slider_title"><h4>Slider Title:</h4></label>
+      <input type="text" name="slider_title" id="slider-title" placeholder="Add a slider title" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="slider_content"><h4>Slider Content:</h4></label>
+      <textarea name="slider_content" class="form-control" rows="5"></textarea>
+    </div>
+    <label for="slider_image"><h4 class="w-100 clearfix mb-0">Slider Image:</h4></label>
+    <small class="w-100 cleafix display-block pb-2"><strong>(Image dimensions: 1075px Width x 525px Height )</strong></small>
+    <div class="col-lg-3 p-0">
+    <button type="button" class="btn btn-primary my-2 text-white clearfix" data-toggle="modal" data-target="#exampleModal">Add new featured image</button>
+    </div>
+    <div class="col-lg-9 pb-3 pl-0">
+      <div class="hidden-media-fields"></div>
+      <div class="featured-image-holder"></div>
+    </div>
+    <div class="clearfix">
+      <input type="submit" name="submit" value="Save" class="btn btn-primary">
+      <a href="/home/edit-home-slider" class="btn btn-primary">Back</a>
+    </div>
+  </form>
+
+{% endblock %}
+
+{% block footer %}
+<h1>Footer</h1>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends "admin-base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+<div class="col-12">
+  <div class="row">
+
+<h1 class="clearfix w-100 pb-4">Admin - Support</h1>
+
+{% if tickets is not empty %}
+
+<table class="w-100">
+
+<thead>
+  <tr>
+    <th>Ticket ID</th>
+    <th>Ticket Title</th>
+    <th>Ticket Type</th>
+    <th>Ticket Importance</th>
+    <th>Ticket Status</th>
+    <th>&nbsp;</th>
+  </tr>
+</thead>
+<tbody>
+
+{% for ticket in tickets %}
+
+<tr>
+  <td>{{ ticket.id }}</td>
+  <td>{{ ticket.ticket_title }}</td>
+  <td>{{ ticket.ticket_type }}</td>
+  <td>{{ ticket.ticket_importance }}</td>
+  <td>{{ ticket.ticket_status }}</td>
+  <td><a href="/support/{{ ticket.id }}/view-ticket" class="btn btn-primary">View</a></td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+</table>
+
+{% else %}
+
+<p class="w-100">No open support tickets found<p>
+
+{% endif %}
+
+<div class="row clearfix w-100">
+  <div class="col-lg-12">
+    <div class="hp-pager">
+      <ul class="pl-0 mt-3">
+        {% if (current_page <= total_page_count) and (current_page > 1) %}
+        <a href="/support/index?page={{ previous_link }}">Previous</a>
+        {% endif %}
+        {% if total_page_count > 1 %}
+      {% for pagintation in total_pages %}
+        {% if pagintation == current_page %}
+        <li class="list-unstyled list-inline-item pt-1 pb-1 pl-2 pr-2 current-page mr-0">
+          {% else %}
+          <li class="list-unstyled list-inline-item pt-1 pb-1 pl-2 pr-2">
+          {% endif %}
+        <a href="/support/index?page={{ pagintation }}" >{{ pagintation }}</a>
+      </li>
+      {% endfor %}
+      {% endif %}
+      {% if (current_page >= 1) and (current_page < total_page_count) %}
+      {% set pagintation = current_page + 10 %}
+      <a href="/support/index?page={{ pagintation }}">Next</a>
+      {% endif %}
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="row clearfix">
+  <div class="col-lg-12">
+    <a href="/support/new-support-ticket" class="btn btn-primary mt-4">New ticket</a>
+  </div>
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

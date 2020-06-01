@@ -1,0 +1,56 @@
+{% extends "admin-base.html" %}
+
+{% block title %}Posts{% endblock %}
+
+{% block body %}
+
+  <h1 class="w-100">Admin - Recipes</h1>
+
+  <table width="100%">
+    <tr>
+      <th>Title</th>
+      <th>Category</th>
+      <th>&nbsp;</th>
+    </tr>
+  {% for post in posts %}
+    <tr>
+      <td width="250">{{ post.title }}</td>
+      <td>{{ post.category }}</td>
+      <td><a href="/recipes/{{post.id}}/edit" class="btn btn-primary">Edit</td>
+        <td><a href="/blog/{{post.id}}/single/{{ post.page_slug }}" class="btn btn-secondary">View</a></td>
+      <td><a href="/recipes/{{post.id}}/delete" class="btn btn-danger">Delete</a></td>
+    </tr>
+  {% endfor %}
+  </table>
+
+  <div class="hp-pager">
+    <ul class="pl-0 mt-3">
+      {% if (current_page <= total_page_count) and (current_page > 1) %}
+      <a href="/recipes/list?page={{ previous_link }}">Previous</a>
+      {% endif %}
+      {% if total_page_count > 1 %}
+    {% for pagintation in total_pages %}
+      {% if pagintation == current_page %}
+      <li class="list-unstyled list-inline-item pt-1 pb-1 pl-2 pr-2 current-page mr-0">
+        {% else %}
+        <li class="list-unstyled list-inline-item pt-1 pb-1 pl-2 pr-2">
+        {% endif %}
+      <a href="/recipes/list?page={{ pagintation }}" >{{ pagintation }}</a>
+    </li>
+    {% endfor %}
+    {% endif %}
+    {% if (current_page >= 1) and (current_page < total_page_count) %}
+    {% set pagintation = current_page + 10 %}
+    <a href="/recipes/list?page={{ pagintation }}">Next</a>
+    {% endif %}
+    </ul>
+  </div>
+
+  <a href="/recipes/new" class="btn btn-primary my-3">Add new</a>
+
+
+{% endblock %}
+
+{% block footer %}
+<h1>Footer</h1>
+{% endblock %}

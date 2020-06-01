@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Posts{% endblock %}
+
+{% block body %}
+<div class="col-12">
+  <h1>Sign up</h1>
+  {% if user.errors is not empty %}
+  <p>Errors:</p>
+  <ul>
+    {% for error in user.errors %}
+    <li>{{ error }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  <form method="post" action="/signup/create" id="formSignup">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input id="inputName" type="text" name="name" placeholder="Your Name" value="{{ user.name }}" class="form-control" autofocus required>
+    </div>
+    <div class="form-group">
+      <label for="inputEmail">Email address</label>
+      <input id="inputEmail" type="email" name="email" placeholder="Email address" value="{{ user.email }}" class="form-control" autofocus required>
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input id="inputPassword" type="password" name="password" placeholder="Password" class="form-control" required>
+    </div>
+    <div>
+      <input id="submit" class="btn btn-default" type="submit" name="submit" value="Sign up" >
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+{% block footer %}
+<div class="col-12">
+    <h1>Footer</h1>
+</div>
+
+<!-- The validation below is here just to reinforce the PHP validation for extra security -->
+
+<script src="/js/hideShowPassword.min.js"></script>
+
+<script>
+
+jQuery.validator.addMethod('validPassword', function(value, element) {
+  return this.optional(element) || /.*\d+.*/.test(value);
+},"Must contain at least one letter and one number");
+
+jQuery(document).ready(function() {
+
+  jQuery('#formSignup').validate({
+    rules: {
+      name:'required',
+      email: {
+        required: true,
+        email: true,
+        remote: '/account/validate-email'
+      },
+      password: {
+        required: true,
+        minlength: 6,
+        validPassword: 'inputPassword'
+      }
+    },
+    messages:{
+      email: {
+        remote: 'email already taken'
+      }
+    }
+  });
+  jQuery('#inputPassword').hideShowPassword({
+    show: false,
+    innerToggle: 'focus'
+  })
+});
+</script>
+
+{% endblock %}

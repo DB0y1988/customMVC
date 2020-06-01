@@ -1,0 +1,120 @@
+{% extends "admin-base.html" %}
+
+{% block title %}Posts{% endblock %}
+
+{% block body %}
+
+  <h1 class="w-100">Admin - Edit page</h1>
+
+  <form action="/pages/update" method="post" class="page-form">
+    <div class="form-group">
+      <label for="title"><h3>Title:</h3></label>
+      <input name="title" id="title" class="form-control" type="text" value="{{ title }}" maxlength="250">
+    </div>
+    <input type="hidden" name="id" id="id" value="{{ id }}">
+    <textarea name="content" id="content" style="display:none;"></textarea>
+    <div class="row">
+      <div class="col-lg-12">
+    <div class="form-group">
+      <label for="content"><h3>Content</h3></label>
+      {% include 'toolbar.html' only %}
+      <div class="content editor" contenteditable="true">
+        {{ content }}
+      </div>
+    </div>
+  </div>
+</div>
+    <hr />
+    <div class="row">
+      <div class="col-lg-12">
+    {% if featured_image is not empty %}
+    <table border="0" class="featured-image-wrap">
+      <tr>
+        <td class="pl-0">
+        <div class="featured-image">
+          <h3>Featured Image</h3>
+          <div class="featured-image-holder">
+            <div id="remove-image">
+              <a href="#" title="Remove image">X</a>
+            </div>
+          <img src="{{ featured_image }}" alt="featured-image"/>
+          </div>
+          <input type="hidden" name="featured_image" value="{{ featured_image }}">
+        </div>
+      </td>
+        <td>
+          <h3>Upload a new featured image</h3>
+          <button type="button" class="btn btn-primary my-2 text-white" data-toggle="modal" data-target="#exampleModal">Add new featured image</button>
+          <div class="hidden-media-fields"></div>
+          <div class="featured-image-holder"></div>
+        </td>
+      </tr>
+    </table>
+    {% else %}
+    <h3>Upload a featured image</h3>
+    <button type="button" class="btn btn-primary my-2 text-white" data-toggle="modal" data-target="#exampleModal">Add new featured image</button>
+    <div class="hidden-media-fields"></div>
+    <div class="featured-image-holder"></div>
+    {% endif %}
+  </div>
+</div>
+    <hr />
+    <div class="row">
+      <div class="col-lg-6">
+        <h3>Page template</h3>
+        <div class="form-group">
+        <select class="form-control" name="template">
+          <option value="{{ current_template }}">{{ current_template }}</option>
+          {% for template in templates %}
+          {% if template != current_template %}
+          <option value="{{ template }}">{{ template }}</option>
+          {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+      </div>
+      <div class="col-lg-6">
+        <h3>Page parent</h3>
+        <div class="form-group">
+        <select class="form-control" name="parent">
+          {% if current_parent != "No Parent" %}
+            <option value="{{ current_parent }}">{{ current_parent }}</option>
+          {% endif %}
+          <option value="No Parent">No Parent</option>
+          {% for all_pages in pages %}
+            {% if all_pages.title != current_parent %} {
+              {% if all_pages.title != title %}
+              <option value="{{ all_pages.title }}">{{ all_pages.title }}</option>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+      </div>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-lg-12">
+        <h3>Include in the main menu</h3>
+      {% if in_menu == "1" %}
+        <input type="checkbox" name="in_menu" value="1" checked> Yes
+      {% else %}
+      <input type="checkbox" name="in_menu" value="1"> Yes
+      {% endif %}
+    </div>
+    </div>
+    <hr />
+    <div class="form-group">
+    <label for="excerpt"><h3>The excerpt:</h3></label>
+    <p>Max length 150 characters</p>
+    <input name="excerpt" id="excerpt" class="form-control" type="text" value="{{ excerpt }}" placeholder="Please give this article a description" maxlength="250">
+    </div>
+    <input type="submit" name="submit" value="Update" class="btn btn-primary submit-page">
+    <a href="/pages/index" class="btn btn-primary">Back</a>
+    <div class="float-right"><a id="{{ id }}" href="#" class="btn btn-danger delete-page-btn">Delete page</a></div>
+  </form>
+{% endblock %}
+
+{% block footer %}
+<h1>Footer</h1>
+{% endblock %}
